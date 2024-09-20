@@ -2,7 +2,12 @@
   <div class="main">
     <el-container style="width: 100%; height: 100%">
       <el-aside>
-        <Aside :talks="talks" />
+        <Aside
+          :talks="talks"
+          :len="len"
+          @deleteTalks="deleteTalks"
+          @lenTalks="lenTalks"
+        />
       </el-aside>
       <el-container style="width: 75%; height: 100%">
         <el-main>Main</el-main>
@@ -16,11 +21,16 @@
 import { ref, computed, reactive } from "vue";
 import Aside from "./components/aside.vue";
 
-const talks = reactive([
+const talks = ref([
   { id: 1, name: "FirstTalk" },
   { id: 2, name: "SecondTalk" },
   { id: 3, name: "ThirdTalk" },
 ]);
+
+const deleteTalks = (talks_Id) => {
+  talks.value = talks.value.filter((talks) => talks.id !== talks_Id);
+};
+const len = computed(() => talks.value.length);
 </script>
 
 <style scoped>

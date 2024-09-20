@@ -12,12 +12,14 @@
       </el-button>
     </div>
     <div class="list">
-      <h5 v-if="talks == {}">暂无数据</h5>
+      <h5 v-if="len == 0">暂无数据</h5>
       <ul class="talks-list">
         <li v-for="item in talks" :key="item.id">
-          <div class="talks-view">
+          <el-button class="talks-view">
             <p>{{ item.name }}</p>
-          </div>
+
+            <button @click="deleteTalks(item.id)"></button>
+          </el-button>
         </li>
       </ul>
     </div>
@@ -25,8 +27,13 @@
 </template>
 
 <script  setup>
-const talks = defineProps(["talks"]);
-console.log(talks.value);
+import { defineProps, defineEmits } from "vue";
+const props = defineProps(["talks", "len"]);
+const emit = defineEmits(["deleteTalks"]);
+
+const deleteTalks = (talks_Id) => {
+  talks_Id && emit("deleteTalks", talks_Id);
+};
 </script>
 
 <style scoped>
@@ -40,5 +47,7 @@ console.log(talks.value);
 .list {
   margin: 0 auto;
   margin-top: 50px;
+}
+.ul {
 }
 </style>
